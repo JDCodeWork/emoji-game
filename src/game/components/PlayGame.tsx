@@ -1,29 +1,22 @@
-import { emojis } from "../constants/emojis"
+import styles from '../styles/PlayGame.module.css';
 
-const gridSize = 20
-
-const createGrid = () => {
-  let cards = new Set<string>()
-  let maxCards = gridSize / 2
-
-  while (cards.size < maxCards) {
-    const randomIndex = Math.floor(Math.random() * emojis.length)
-
-    cards.add(emojis[randomIndex])
-  }
-
-  return shuffle([...cards, ...cards])
-}
-
-const shuffle = (array: string[]) => {
-  return array.sort(() => Math.random() - 0.5)
-}
+import { EmojiCard } from './EmojiCard';
+import { useGameStore } from '../hooks/useGameStore';
 
 export const PlayGame = () => {
-  const grid = createGrid()
+  const { getCards } = useGameStore({})
 
-  console.log('grid', grid)
+  const cards = getCards()
+
   return (
-    <div>PlayGame</div>
+    <div className={styles['card-container']}>
+      {cards.map((emoji, index) => (
+        <EmojiCard
+          key={index}
+          emoji={emoji}
+          idx={index}
+        />))
+      }
+    </div>
   )
 }

@@ -1,23 +1,18 @@
-import { setStateToPlaying } from "../store/actions"
+import { useGameStore } from "../hooks/useGameStore"
 
 export const StartMenu = () => {
+  const { handleStartGame } = useGameStore({})
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-4xl font-bold uppercase">Emoji Game 🎮</h1>
-      <StartMenuButton label="play" action={setStateToPlaying} />
-    </div>
-  )
-}
+      <h1 className="text-4xl font-bold uppercase">Empareja los emojis 🎮</h1>
 
-interface StartMenuButtonProps {
-  label: string
-  action: () => void
-}
-const StartMenuButton = ({ label, action }: StartMenuButtonProps) => {
-  return (
-    <button className="bg-slate-800 hover:bg-slate-700 rounded outline-1 outline-slate-700 px-4 py-2 text-lg uppercase font-bold " onClick={action}>
-      {label}
-    </button>
+      <button
+        className="mx-8 mt-8 bg-slate-800 hover:bg-slate-700 rounded outline-1 outline-slate-700 px-4 py-2 text-lg uppercase font-bold"
+        onClick={handleStartGame}
+      >
+        Iniciar juego
+      </button>
+    </div>
   )
 }

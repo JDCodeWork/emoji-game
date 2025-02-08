@@ -5,14 +5,21 @@ import { devtools } from 'zustand/middleware'
 
 interface Store {
   state: GameState
+
+  cards: string[],
+  selected: number[],
+  matches: string[]
 }
 
 const initialStore: Store = {
-  state: GameState.START
+  state: GameState.START,
+  cards: [],
+  selected: [],
+  matches: [],
 }
 
 
-export const useGameStore = create<Store>()(
+export const useStore = create<Store>()(
   devtools(() => ({
     ...initialStore
   }))

@@ -1,8 +1,8 @@
 import { StoreApi, UseBoundStore } from 'zustand'
-import { useGameStore } from './store'
+import { useStore } from './store'
 
 type WithSelectors<S> = S extends { getState: () => infer T }
-  ? S & { use: { [K in keyof T]: () => T[K] } }
+  ? S & { use: { [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K] } }
   : never
 
 const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
@@ -10,11 +10,14 @@ const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
 ) => {
   let store = _store as WithSelectors<typeof _store>
   store.use = {}
-  for (let k of Object.keys(store.getState())) {
-    (store.use as any)[k] = () => store((s) => s[k as keyof typeof s])
+
+  for (let key of Object.keys(store.getState())) {
+    const capitalizedKey = `get${key.charAt(0).toUpperCase()}${key.slice(1)}` as `get${Capitalize<string & typeof key>}`
+
+    (store.use as any)[capitalizedKey] = () => store((s) => s[key as keyof typeof s])
   }
 
   return store
 }
 
-export const useGameStoreSelector = createSelectors(useGameStore)
+export const useStoreSelector = createSelectors(useStore)
