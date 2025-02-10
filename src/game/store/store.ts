@@ -5,6 +5,7 @@ import { devtools } from 'zustand/middleware'
 
 interface Store {
   state: GameState
+  time: number
 
   cards: string[],
   selected: number[],
@@ -13,6 +14,7 @@ interface Store {
 
 const initialStore: Store = {
   state: GameState.START,
+  time: 20,
   cards: [],
   selected: [],
   matches: [],

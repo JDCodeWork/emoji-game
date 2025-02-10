@@ -9,6 +9,12 @@ export const onWinGame = () => useStore.setState({
   state: GameState.WON,
   matches: []
 })
+export const onLossGame = () => useStore.setState({
+  state: GameState.LOST,
+  matches: [],
+  selected: [],
+  time: 20
+})
 
 export const addMatched = (matched: string) => useStore.setState((state) => {
   if (state.matches.includes(matched)) {
@@ -25,3 +31,5 @@ export const addSelected = (idx: number) => useStore.setState((state) => ({
 }))
 
 export const clearSelected = () => useStore.setState({ selected: [] })
+
+export const decreaseTime = () => useStore.setState(state => ({ time: state.time - 1 }))
