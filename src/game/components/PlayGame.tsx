@@ -9,7 +9,7 @@ export const PlayGame = () => {
 
   return (
     <>
-      <div className="">{time}</div>
+      <div className="text-4xl mb-8 font-bold">{time}</div>
       <div className="grid grid-cols-5 gap-6">
         {cards.map((emoji, index) => (
           <EmojiCard

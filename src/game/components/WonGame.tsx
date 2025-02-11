@@ -5,19 +5,17 @@ import { useGameStore } from '../hooks/useGameStore';
 export const WonGame = () => {
   const { handleStartGame } = useGameStore()
 
-  const duration = 2 * 1000;
-  const end = Date.now() + duration;
-
   useEffect(() => {
+    const duration = 3 * 1000;
+    const end = Date.now() + duration;
+
     (function frame() {
-      // launch a few confetti from the left edge
       confetti({
         particleCount: 5,
         angle: 60,
         spread: 55,
         origin: { x: 0 }
       });
-      // and launch a few from the right edge
       confetti({
         particleCount: 5,
         angle: 120,
@@ -25,7 +23,6 @@ export const WonGame = () => {
         origin: { x: 1 }
       });
 
-      // keep going until we are out of time
       if (Date.now() < end) {
         requestAnimationFrame(frame);
       }

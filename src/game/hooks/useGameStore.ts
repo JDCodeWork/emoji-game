@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useTransition } from "react"
 import { emojis } from "../constants/emojis"
 import {
   addMatched,
@@ -11,12 +11,14 @@ import {
 import { useStoreSelector } from "../store/selectors"
 import { createCards } from "../utils/create-cards"
 import { GameState } from "../interface/game-state"
+import { handleTransition } from "../utils/handle-transition"
 
 interface Opts {
   gridSize?: number
+  playTime?: number
 }
 export const useGameStore = (opts?: Opts) => {
-  const { gridSize = 20 } = opts ?? {}
+  const { gridSize = 20, playTime = 45 } = opts ?? {}
 
   const cards = useStoreSelector.use.getCards()
   const selected = useStoreSelector.use.getSelected()
@@ -27,7 +29,7 @@ export const useGameStore = (opts?: Opts) => {
   const handleStartGame = () => {
     const newCards = createCards(emojis, gridSize)
 
-    onStartGame(newCards)
+    handleTransition(() => onStartGame(newCards, playTime))
   }
 
   useEffect(() => {
@@ -37,7 +39,9 @@ export const useGameStore = (opts?: Opts) => {
       if (cards[first] == cards[second]) {
         addMatched(cards[first])
       } else {
-        setTimeout(clearSelected, 400)
+        setTimeout(() =>
+          handleTransition(clearSelected)
+          , 400)
       }
     }
   }, [selected]);
@@ -51,7 +55,7 @@ export const useGameStore = (opts?: Opts) => {
   useEffect(() => {
     if (state != GameState.PLAYING) return;
 
-    if (time == 0) onLossGame()
+    if (time == 0) handleTransition(onLossGame)
 
     const timer = setInterval(decreaseTime, 1000);
 

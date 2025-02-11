@@ -6,42 +6,36 @@ export const LostGame = () => {
   const { handleStartGame } = useGameStore()
 
   useEffect(() => {
-    const duration = 5 * 1000; // 3 segundos de abucheo
+    const duration = 3 * 1000;
     const end = Date.now() + duration;
 
-    const launchBoo = () => {
+    (function frame() {
       confetti({
-        ticks: 400,
+        ticks: 300,
         particleCount: 4,
         angle: Math.random() * 60 + 60,
         spread: 80,
         startVelocity: Math.random() * 40 + 40,
         colors: ["#808080", "#4F4F4F", "#A9A9A9"],
         gravity: 1,
-        origin: { x: Math.random(), y: 0 }, // Aparecen desde arriba
+        origin: { x: Math.random(), y: 0 },
       });
 
       confetti({
-        ticks: 400,
+        ticks: 300,
         particleCount: 4,
         angle: Math.random() * 60 + 60,
         spread: 80,
         startVelocity: Math.random() * 40 + 40,
         colors: ["#808080", "#4F4F4F", "#A9A9A9"],
         gravity: 1,
-        origin: { x: Math.random(), y: 0 }, // Aparecen desde arriba
+        origin: { x: Math.random(), y: 0 },
       });
-    };
 
-    const interval = setInterval(() => {
-      if (Date.now() > end) {
-        clearInterval(interval);
-        return;
+      if (Date.now() < end) {
+        requestAnimationFrame(frame)
       }
-      launchBoo();
-    }, 300); // Cada 300ms para que sea constante
-
-    return () => clearInterval(interval);
+    })()
   }, []);
 
 

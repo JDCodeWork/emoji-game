@@ -1,9 +1,10 @@
 import { GameState } from "../interface/game-state"
 import { useStore } from "./store"
 
-export const onStartGame = (cards: string[]) => useStore.setState({
+export const onStartGame = (cards: string[], playTime: number) => useStore.setState({
   state: GameState.PLAYING,
-  cards
+  cards,
+  time: playTime
 })
 export const onWinGame = () => useStore.setState({
   state: GameState.WON,
@@ -13,7 +14,6 @@ export const onLossGame = () => useStore.setState({
   state: GameState.LOST,
   matches: [],
   selected: [],
-  time: 20
 })
 
 export const addMatched = (matched: string) => useStore.setState((state) => {
