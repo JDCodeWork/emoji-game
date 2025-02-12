@@ -1,9 +1,16 @@
 import confetti from 'canvas-confetti'
 import { useGameStore } from "../hooks/useGameStore"
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const LostGame = () => {
+  const [isEndAnimation, setIsEndAnimation] = useState(false)
   const { handleStartGame } = useGameStore()
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsEndAnimation(true)
+    }, 2500);
+  }, []);
 
   useEffect(() => {
     const duration = 3 * 1000;
@@ -44,8 +51,9 @@ export const LostGame = () => {
       <h1 className="text-4xl font-bold uppercase mb-2">¡Buuuuu! 👎</h1>
       <h2 className="text-2xl font-black uppercase leading-0">Has perdido, qué vergüenza... 😆</h2>
       <button
-        className="py-2 m-8 text-lg font-bold uppercase rounded x-4 bg-slate-800 hover:bg-slate-700 outline-1 outline-slate-700"
+        className="py-2 m-8 text-lg font-bold uppercase rounded x-4 bg-slate-800 hover:bg-slate-700 outline-1 outline-slate-700 disabled:bg-slate-900 disabled:outline-slate-800 disabled:text-slate-400"
         onClick={handleStartGame}
+        disabled={!isEndAnimation}
       >
         Jugar de nuevo
       </button>

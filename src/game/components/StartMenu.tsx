@@ -1,7 +1,7 @@
 import { useGameStore } from "../hooks/useGameStore"
 
 export const StartMenu = () => {
-  const { handleStartGame } = useGameStore({})
+  const { handleStartGame } = useGameStore()
 
   return (
     <div className="flex flex-col gap-4">

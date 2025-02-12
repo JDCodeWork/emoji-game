@@ -1,5 +1,12 @@
-import { useEffect, useTransition } from "react"
+import { useEffect, useState } from "react"
+import useSound from "use-sound"
+
+import winSfx from '../sounds/win.mp3'
+import loseSfx from '../sounds/lose.mp3'
+import countdownSfx from '../sounds/countdown.mp3'
+
 import { emojis } from "../constants/emojis"
+import { GameState } from "../interface/game-state"
 import {
   addMatched,
   clearSelected,
@@ -10,8 +17,9 @@ import {
 } from "../store/actions"
 import { useStoreSelector } from "../store/selectors"
 import { createCards } from "../utils/create-cards"
-import { GameState } from "../interface/game-state"
 import { handleTransition } from "../utils/handle-transition"
+
+type CountState = "off" | "on" | "pause"
 
 interface Opts {
   gridSize?: number
@@ -19,6 +27,13 @@ interface Opts {
 }
 export const useGameStore = (opts?: Opts) => {
   const { gridSize = 20, playTime = 45 } = opts ?? {}
+
+  // TODO refactor this
+  const [playWinSfx] = useSound(winSfx, { volume: .08 })
+  const [playLoseSfx] = useSound(loseSfx, { volume: .5 })
+  const [playCountdownSfx, { stop: stopCountdownSfx, pause: pauseCountDownSfx }] = useSound(countdownSfx)
+
+  const [countState, setCountState] = useState<CountState>('off')
 
   const cards = useStoreSelector.use.getCards()
   const selected = useStoreSelector.use.getSelected()
@@ -28,9 +43,47 @@ export const useGameStore = (opts?: Opts) => {
 
   const handleStartGame = () => {
     const newCards = createCards(emojis, gridSize)
-
     handleTransition(() => onStartGame(newCards, playTime))
   }
+
+  const handleWinGame = () => {
+    if (countState == "on") {
+      setCountState("off")
+      stopCountdownSfx()
+    }
+
+    playWinSfx()
+    onWinGame()
+  }
+
+  const handleLoseGame = () => {
+    if (countState == "on") {
+      setCountState("off")
+      stopCountdownSfx()
+    }
+
+    playLoseSfx()
+    handleTransition(onLossGame)
+  }
+
+  useEffect(() => {
+    if (state == GameState.PAUSED && countState == "on") {
+      setCountState("pause")
+      pauseCountDownSfx()
+    }
+
+    if (state == GameState.PLAYING && countState == "pause") {
+      playCountdownSfx()
+      setCountState("on")
+    }
+  }, [state, countState]);
+
+  useEffect(() => {
+    if (time == 10 && state == GameState.PLAYING && countState == "off") {
+      playCountdownSfx()
+      setCountState('on')
+    }
+  }, [time, state]);
 
   useEffect(() => {
     if (selected.length == 2) {
@@ -47,15 +100,13 @@ export const useGameStore = (opts?: Opts) => {
   }, [selected]);
 
   useEffect(() => {
-    if (matches.length == gridSize / 2) {
-      onWinGame()
-    }
+    if (matches.length == gridSize / 2) handleWinGame()
   }, [matches]);
 
   useEffect(() => {
     if (state != GameState.PLAYING) return;
 
-    if (time == 0) handleTransition(onLossGame)
+    if (time == 0) handleLoseGame()
 
     const timer = setInterval(decreaseTime, 1000);
 
