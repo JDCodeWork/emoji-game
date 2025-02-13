@@ -1,18 +1,17 @@
-import { useGameStore } from "../hooks/useGameStore"
+import { useGameState } from "../hooks/useGameState"
+import Layout from './game-status'
 
 export const StartMenu = () => {
-  const { handleStartGame } = useGameStore()
+  const { handleStartGame } = useGameState()
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-4xl font-bold uppercase">Empareja los emojis 🎮</h1>
-
-      <button
-        className="mx-8 mt-8 bg-slate-800 hover:bg-slate-700 rounded outline-1 outline-slate-700 px-4 py-2 text-lg uppercase font-bold"
+    <Layout.Display>
+      <Layout.Title title='Empareja los emojis 🎮' />
+      <Layout.Action
+        label='Iniciar Juego'
         onClick={handleStartGame}
-      >
-        Iniciar juego
-      </button>
-    </div>
+        className="py-2 px-4 rounded"
+      />
+    </Layout.Display>
   )
 }

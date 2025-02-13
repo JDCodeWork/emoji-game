@@ -1,12 +1,13 @@
 import { EmojiCard } from './EmojiCard';
-import { useGameStore } from '../hooks/useGameStore';
+import { useGameState } from '../hooks/useGameState';
 import { useEffect, useState } from 'react';
 import { cn } from '../../utils/cn';
+import { useGameSelector } from '../hooks/useGameSelector';
 
 type TimeState = "normal" | "warning" | "danger"
 
 export const PlayGame = () => {
-  const { getCards, getTime } = useGameStore()
+  const { getCards, getTime } = useGameSelector()
   const [timeState, setTimeState] = useState<TimeState>("normal")
 
   const cards = getCards()

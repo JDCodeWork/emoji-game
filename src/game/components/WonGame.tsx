@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
 
-import { useGameStore } from '../hooks/useGameStore';
+import Layout from './game-status'
+
+import { useGameState } from '../hooks/useGameState';
 
 export const WonGame = () => {
   const [isEndAnimation, setIsEndAnimation] = useState(false)
-  const { handleStartGame } = useGameStore()
+  const { handleStartGame } = useGameState()
 
   useEffect(() => {
     setTimeout(() => {
@@ -38,16 +40,14 @@ export const WonGame = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-4xl font-bold uppercase">¡¡Felicidades 🥳!! </h1>
-      <h2 className='text-2xl font-black uppercase text-center leading-0'>Ganaste.</h2>
-      <button
-        className="py-2 m-6 text-lg font-bold uppercase rounded x-4 bg-slate-800 hover:bg-slate-700 outline-1 outline-slate-700 disabled:bg-slate-900 disabled:outline-slate-800 disabled:text-slate-400"
+    <Layout.Display>
+      <Layout.Title title='¡¡Felicidades 🥳!!' />
+      <Layout.SubTitle label='Ganaste...' />
+      <Layout.Action
+        label='Jugar de nuevo'
         onClick={handleStartGame}
         disabled={!isEndAnimation}
-      >
-        Jugar de nuevo
-      </button>
-    </div>
+      />
+    </Layout.Display>
   )
 }
