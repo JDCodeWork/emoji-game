@@ -9,6 +9,8 @@ export const WonGame = () => {
   const [isEndAnimation, setIsEndAnimation] = useState(false)
   const { handleStartGame } = useGameState()
 
+  const { isMobile } = Layout.useMobile()
+
   useEffect(() => {
     setTimeout(() => {
       setIsEndAnimation(true)
@@ -21,13 +23,13 @@ export const WonGame = () => {
 
     (function frame() {
       confetti({
-        particleCount: 5,
+        particleCount: isMobile ? 2 : 5,
         angle: 60,
         spread: 55,
         origin: { x: 0 }
       });
       confetti({
-        particleCount: 5,
+        particleCount: isMobile ? 2 : 5,
         angle: 120,
         spread: 55,
         origin: { x: 1 }

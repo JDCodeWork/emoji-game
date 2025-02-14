@@ -8,6 +8,8 @@ export const LostGame = () => {
   const [isEndAnimation, setIsEndAnimation] = useState(false)
   const { handleStartGame } = useGameState()
 
+  const { isMobile } = Layout.useMobile()
+
   useEffect(() => {
     setTimeout(() => {
       setIsEndAnimation(true)
@@ -21,7 +23,7 @@ export const LostGame = () => {
     (function frame() {
       confetti({
         ticks: 300,
-        particleCount: 4,
+        particleCount: isMobile ? 2 : 4,
         angle: Math.random() * 60 + 60,
         spread: 80,
         startVelocity: Math.random() * 40 + 40,
@@ -32,7 +34,7 @@ export const LostGame = () => {
 
       confetti({
         ticks: 300,
-        particleCount: 4,
+        particleCount: isMobile ? 2 : 4,
         angle: Math.random() * 60 + 60,
         spread: 80,
         startVelocity: Math.random() * 40 + 40,

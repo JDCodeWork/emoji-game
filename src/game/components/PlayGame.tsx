@@ -1,5 +1,4 @@
 import { EmojiCard } from './EmojiCard';
-import { useGameState } from '../hooks/useGameState';
 import { useEffect, useState } from 'react';
 import { cn } from '../../utils/cn';
 import { useGameSelector } from '../hooks/useGameSelector';
@@ -21,7 +20,7 @@ export const PlayGame = () => {
   return (
     <>
       <div className={cn("text-4xl mb-8 font-bold", timeState == "danger" && "text-red-400 animate-ping delay-75", timeState == "warning" && "text-orange-400 animate-pulse")}>{time}</div>
-      <div className="grid grid-cols-5 gap-6">
+      <div className="flex flex-wrap w-full mx-auto px-2 place-content-center md:w-auto md:mx-0 md:grid md:grid-cols-5 gap-4 md:gap-6">
         {cards.map((emoji, index) => (
           <EmojiCard
             key={index}

@@ -19,17 +19,17 @@ export const EmojiCard = ({ emoji, idx }: Props) => {
   return (
     <button
       className={cn(
-        "rounded-md size-28 relative focus:outline-0 before:content-[' '] before:size-31 before:absolute before:top-[-6px] before:left-[-6px] before:-z-10 before:rounded bg-slate-900  before:bg-slate-800 hover:opacity-90 hover:cursor-pointer",
+        "rounded-md size-20 border-2 border-slate-800 md:border-none md:size-28 relative focus:outline-0 md:before:content-[' '] md:before:size-31 md:before:absolute md:before:top-[-6px] md:before:left-[-6px] md:before:-z-10 md:before:rounded bg-slate-900  md:before:bg-slate-800 hover:opacity-90 md:hover:cursor-pointer",
         isSelected &&
-        'bg-slate-800 before:bg-gradient-to-br before:from-violet-600 before:to-blue-500 before:text-transparent hover:opacity-100 hover:cursor-default',
+        'bg-slate-800 border-violet-600 md:before:bg-gradient-to-br md:before:from-violet-600 md:before:to-blue-500 md:before:text-transparent hover:opacity-100 hover:cursor-default',
         isMatch &&
-        'before:bg-gradient-to-br before:from-violet-900 before:to-blue-900 before:text-transparent hover:opacity-100 hover:cursor-default'
+        'border-blue-900 md:before:bg-gradient-to-br md:before:from-violet-900 md:before:to-blue-900 md:before:text-transparent hover:opacity-100 hover:cursor-default'
       )}
       disabled={isSelected || isMatch || selected.length == 2}
 
       onClick={handleSelect}
     >
-      <div className={cn('text-6xl -translate-y-1 hidden', isSelected && "text-white block", isMatch && "text-white/50 block")}>
+      <div className={cn('text-5xl md:text-6xl md:-translate-y-1 hidden', isSelected && "text-white block", isMatch && "text-white/50 block")}>
         {emoji}
       </div>
     </button>

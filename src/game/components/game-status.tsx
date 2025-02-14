@@ -1,8 +1,26 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from "react"
+import { ButtonHTMLAttributes, PropsWithChildren, useEffect, useState } from "react"
 import { cn } from "../../utils/cn"
 
+const useMobile = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, []);
+
+  return {
+    isMobile
+  }
+}
+
 interface DisplayProps extends PropsWithChildren { }
-export const Display = ({ children }: DisplayProps) => {
+const Display = ({ children }: DisplayProps) => {
   return (
     <div className="mx-4 text-center select-none" >
       {children}
@@ -13,21 +31,21 @@ export const Display = ({ children }: DisplayProps) => {
 interface TitleProps {
   title: string
 }
-export const Title = ({ title }: TitleProps) => (
-  <h1 className="text-2xl font-black mb-2 uppercase md:mb-8 md:text-4xl md:font-bold">{title}</h1>
+const Title = ({ title }: TitleProps) => (
+  <h1 className="font-black mb-2 uppercase md:mb-8 text-4xl md:font-bold">{title}</h1>
 )
 
 interface SubTitleProps {
   label: string
 }
-export const SubTitle = ({ label }: SubTitleProps) => (
+const SubTitle = ({ label }: SubTitleProps) => (
   <h2 className="text-lg text-wrap font-bold leading-snug mb-8 md:mb-12 md:text-2xl md:leading-0 uppercase" >{label}</h2>
 )
 
 interface ActionProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string
 }
-export const Action = ({ label, ...buttonAttributes }: ActionProps) => {
+const Action = ({ label, ...buttonAttributes }: ActionProps) => {
   const { className, ...attributes } = buttonAttributes
 
   return (
@@ -44,5 +62,6 @@ export default {
   Display,
   Title,
   SubTitle,
-  Action
+  Action,
+  useMobile
 }
