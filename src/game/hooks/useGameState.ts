@@ -20,7 +20,7 @@ interface Opts {
   playTime?: number
 }
 export const useGameState = (opts?: Opts) => {
-  const { gridSize = 10, playTime = 10 } = opts ?? {}
+  const { gridSize = 10, playTime = 15 } = opts ?? {}
 
   const cards = useStoreSelector.use.getCards()
   const selected = useStoreSelector.use.getSelected()

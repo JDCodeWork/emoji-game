@@ -10,7 +10,7 @@ export const StartMenu = () => {
       <Layout.Action
         label='Iniciar Juego'
         onClick={handleStartGame}
-        className="py-2 px-4 rounded"
+        className="py-2 px-4 rounded mt-4 md:mt-0"
       />
     </Layout.Display>
   )
