@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
 
-import Layout from './game-status'
+import Layout from '../components/game-status'
+import { useMemoryState } from '../hooks/useMemoryState';
 
-import { useGameState } from '../hooks/useGameState';
-
-export const WonGame = () => {
+export const WonView = () => {
   const [isEndAnimation, setIsEndAnimation] = useState(false)
-  const { handleStartGame } = useGameState()
 
   const { isMobile } = Layout.useMobile()
+  const { handleStartGame } = useMemoryState()
 
   useEffect(() => {
     setTimeout(() => {

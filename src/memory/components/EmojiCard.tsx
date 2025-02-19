@@ -1,6 +1,6 @@
-import { useStoreSelector } from '../store/selectors';
-import { addSelected } from '../store/actions';
-import { cn } from '../../utils/cn';
+import { cn } from '../../shared/utils/cn';
+import { onSelect } from '../store/actions';
+import { useMemoryLogic } from '../hooks/useMemoryLogic';
 
 interface Props {
   emoji: string
@@ -8,13 +8,12 @@ interface Props {
 }
 
 export const EmojiCard = ({ emoji, idx }: Props) => {
-  const selected = useStoreSelector.use.getSelected()
-  const matches = useStoreSelector.use.getMatches()
+  const { selected, matches } = useMemoryLogic()
 
   const isSelected = selected.includes(idx)
   const isMatch = matches.includes(emoji)
 
-  const handleSelect = () => addSelected(idx)
+  const handleSelect = () => onSelect(idx)
 
   return (
     <button

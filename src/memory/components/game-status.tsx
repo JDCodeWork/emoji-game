@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, PropsWithChildren, useEffect, useState } from "react"
-import { cn } from "../../utils/cn"
+import { cn } from "../../shared/utils/cn"
 
 const useMobile = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
@@ -37,9 +37,10 @@ const Title = ({ title }: TitleProps) => (
 
 interface SubTitleProps {
   label: string
+  className?: string
 }
-const SubTitle = ({ label }: SubTitleProps) => (
-  <h2 className="text-lg text-wrap font-bold leading-snug mb-8 md:mb-12 md:text-2xl md:leading-0 uppercase" >{label}</h2>
+const SubTitle = ({ label, className }: SubTitleProps) => (
+  <h2 className={cn("text-lg text-wrap font-bold leading-snug mb-8 md:mb-12 md:text-2xl md:leading-0 uppercase", className)} >{label}</h2>
 )
 
 interface ActionProps extends ButtonHTMLAttributes<HTMLButtonElement> {

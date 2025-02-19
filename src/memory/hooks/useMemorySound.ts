@@ -5,10 +5,9 @@ import timerSound from '../sounds/timer.mp3'
 import loseSound from '../sounds/lose.mp3'
 import winSound from '../sounds/win.mp3'
 
-import { useGameSelector } from "./useGameSelector"
-import { GameState as GS } from "../interface/game-state"
+import { useMemoryState } from "./useMemoryState"
 
-export const useGameSound = () => {
+export const useMemorySound = () => {
   const [effectsSound, setEffectsSound] = useState(1)
 
   const [playWinSfx] = useSound(winSound, { volume: effectsSound * .5 })
@@ -22,8 +21,7 @@ export const useGameSound = () => {
   const [isActiveTimer, setIsActiveTimer] = useState(false)
   const [isOldGameStatePaused, setIsOldGameStatePaused] = useState(false)
 
-  const gameState = useGameSelector().getState()
-  const timer = useGameSelector().getTime()
+  const { state, timer } = useMemoryState()
 
   const onToggleEffectsSound = () => {
     if (effectsSound > 0) {
@@ -33,49 +31,48 @@ export const useGameSound = () => {
     }
   }
 
-  //? Game sound logic
-  // When game end but timer is active
+  // When game end but time is active
   useEffect(() => {
-    if (isActiveTimer && gameState != GS.PLAYING && gameState != GS.PAUSED) {
+    if (isActiveTimer && state != "playing" && state != "paused") {
       setIsActiveTimer(false)
       stopTimerSfx()
     }
-  }, [gameState, isActiveTimer]);
+  }, [state, isActiveTimer]);
 
-  // When the timer is active but player pauses the game
+  // When the time is active but player pauses the game
   useEffect(() => {
-    if (isActiveTimer && gameState == GS.PAUSED) {
+    if (isActiveTimer && state == "paused") {
       setIsOldGameStatePaused(true)
       stopTimerSfx()
     }
-  }, [gameState, isActiveTimer]);
+  }, [state, isActiveTimer]);
 
   // When the player continues with the game
   useEffect(() => {
-    if (isActiveTimer && isOldGameStatePaused && gameState == GS.PLAYING) {
+    if (isActiveTimer && isOldGameStatePaused && state == "playing") {
       playTimerSfx()
     }
-  }, [gameState, isActiveTimer]);
+  }, [state, isActiveTimer]);
 
 
-  // When the player is playing but the timer is close to expiring
+  // When the player is playing but the time is close to expiring
   useEffect(() => {
-    if (timer == 5 && !isActiveTimer && gameState == GS.PLAYING) {
+    if (timer == 5 && !isActiveTimer && state == "playing") {
       setIsActiveTimer(true)
       playTimerSfx()
     }
-  }, [timer, isActiveTimer, gameState]);
+  }, [timer, isActiveTimer, state]);
 
 
   useEffect(() => {
-    if (gameState == GS.WON) {
+    if (state == "won") {
       playWinSfx()
     }
 
-    if (gameState == GS.LOST) {
+    if (state == "lost") {
       playLoseSfx()
     }
-  }, [gameState]);
+  }, [state]);
 
   return {
     effectsSound,

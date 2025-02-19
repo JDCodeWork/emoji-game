@@ -1,8 +1,8 @@
-import { useGameState } from "../hooks/useGameState"
-import Layout from './game-status'
+import Layout from '../components/game-status'
+import { useMemoryState } from '../hooks/useMemoryState'
 
-export const StartMenu = () => {
-  const { handleStartGame } = useGameState()
+export const StartView = () => {
+  const { handleStartGame } = useMemoryState()
 
   return (
     <Layout.Display>

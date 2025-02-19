@@ -2,6 +2,15 @@
 
 A React implementation of a concentration game based on the one proposed by the content creator [Joy of Code](https://youtu.be/w2q9caYXgkg?si=XmXt3IsLfibNX8GO)
 
+## Features
+
+- **Interactive Gameplay**: Flip the cards to find matching pairs of emojis.
+- **Timer**: A countdown timer that adds urgency to the game.
+- **Sound Effects**: Enjoy sound effects for different game actions.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Game States**: Different views for playing, paused, won, and lost states.
+- **Animations**: Smooth animations for card flips and other interactions.
+
 ## Demo
 
 Note that the game has sounds, if you want to see the full functionality you can run it locally
@@ -10,17 +19,12 @@ Note that the game has sounds, if you want to see the full functionality you can
 
 ![winning the game](./docs/demo/win.gif)
 
-## Mobile Screenshots
+## Technologies Used
 
-![Lose screen](./docs/screenshots/mobile-lose.png)
-
-![playing screen](./docs/screenshots/mobile-playing.png)
-
-![selected](./docs/screenshots/mobile-selected.png)
-
-![menu screen](./docs/screenshots/mobile-start.png)
-
-![win screen](./docs/screenshots/mobile-win.png)
+- **React with TypeScript**: For building the user interface with type safety.
+- **Vite**: For fast and optimized development.
+- **TailwindCSS**: For styling the components.
+- **Zustand**: For state management.
 
 ## Run Locally
 

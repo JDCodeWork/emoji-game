@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { GamePage } from './game/GamePage'
+import { MainMemoryView } from './memory/views'
 
 createRoot(document.getElementById('root')!).render(
-  <GamePage />
+  <MainMemoryView />
 )
